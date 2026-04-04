@@ -217,6 +217,21 @@
 
       return rect.offsetBy(dx: layout.origin.x, dy: layout.origin.y)
     }
+    
+    func containsText(at point: CGPoint) -> Bool {
+      guard let layout = layouts.first(where: { $0.frame.contains(point) }) else {
+        return false
+      }
+      
+      let localPoint = CGPoint(
+        x: point.x - layout.origin.x,
+        y: point.y - layout.origin.y
+      )
+      
+      return layout.runs.contains {
+        $0.typographicBounds.contains(localPoint)
+      }
+    }
   }
 
   extension TextLayoutCollection {

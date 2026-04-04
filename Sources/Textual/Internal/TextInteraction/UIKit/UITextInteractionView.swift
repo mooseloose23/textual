@@ -57,6 +57,18 @@
       return super.point(inside: point, with: event)
     }
 
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+      guard let hitView = super.hitTest(point, with: event) else {
+        return nil
+      }
+      
+      guard hitView === self else {
+        return hitView
+      }
+      
+      return model.containsText(at: point) ? hitView : nil
+    }
+    
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
       switch action {
       case #selector(copy(_:)), #selector(share(_:)):
