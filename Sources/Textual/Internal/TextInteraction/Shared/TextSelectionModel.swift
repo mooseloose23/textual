@@ -83,6 +83,10 @@
     func layoutIndex(of layout: Text.Layout) -> Int? {
       layoutCollection.index(of: layout)
     }
+    
+    func containsText(at point: CGPoint) -> Bool {
+      layoutCollection.containsText(at: point)
+    }
   }
 
   extension TextSelectionModel {
