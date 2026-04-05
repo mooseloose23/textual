@@ -44,11 +44,16 @@
         $0.contains(localPoint)
       }
 
-      if isExcluded {
+      guard !isExcluded, let hitView = super.hitTest(point) else {
         return nil
-      } else {
-        return super.hitTest(point)
       }
+
+      guard hitView === self else {
+        return hitView
+      }
+
+      // Mirror UIKit: only intercept hits that land on rendered text.
+      return model.containsText(at: localPoint) ? hitView : nil
     }
 
     override func mouseDown(with event: NSEvent) {
